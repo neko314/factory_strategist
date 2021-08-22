@@ -1,8 +1,9 @@
 # FactoryStrategist
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/factory_strategist`. To experiment with that code, run `bin/console` for an interactive prompt.
+[Factory_bot](https://github.com/thoughtbot/factory_bot) provides some build strategies (saved instances, unsaved instances, attribute hashes, and stubbed objects). FactoryStrategist is a gem that tells you which factory_bot build_strategy is best on your tests.
 
-TODO: Delete this and the text above, and describe your gem
+**NOTE**
+This gem assumes that the tests are written in [rspec](https://github.com/rspec/rspec).
 
 ## Installation
 
@@ -22,7 +23,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+As for usability, it is like a kind of linter.
+
+### Example
+
+When your application has `spec/models/user_spec.rb` and run it with FactoryStrategist.
+```shell
+$ FATORYSTRATEGIST=1 bundle exec rspec spec/models/user_spec.rb
+```
+In the case which you choose best strategies, the commands returns nothing.
+Otherwise, You can get any message as a result like:
+```
+#=> /spec/models/user_spec.rb:27 `create` can be replaced to `build_stubbed`
+```
 
 ## Development
 
