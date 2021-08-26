@@ -8,17 +8,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Keiko Kaneko"]
   spec.email         = ["keiko.cda@gmail.com"]
 
-  spec.summary       = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description   = "TODO: Write a longer description or delete this line."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Checking the best factory_bot build_strategy in your test"
+  spec.description   = "factory_bot supplies four build_strageries. factory_strategist helps you choose the best one from them."
+  spec.homepage      = "https://github.com/neko314/factory_strategist"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.4.0"
 
   spec.metadata["allowed_push_host"] = "TODO: Set to 'https://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/neko314/factory_strategist"
+  spec.metadata["changelog_uri"] = "https://github.com/neko314/factory_strategist/blob/main/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
