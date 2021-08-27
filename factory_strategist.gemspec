@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "factory_bot supplies four build_strageries. factory_strategist helps you choose the best one from them."
   spec.homepage      = "https://github.com/neko314/factory_strategist"
   spec.license       = "MIT"
-  spec.required_ruby_version = ">= 2.4.0"
+  spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["allowed_push_host"] = "TODO: Set to 'https://mygemserver.com'"
 
