@@ -1,5 +1,6 @@
-require: rubocop-rake
-require: rubocop-rspec
+require:
+  - rubocop-rake
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 3.0
