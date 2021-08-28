@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["keiko.cda@gmail.com"]
 
   spec.summary       = "Checking the best factory_bot build_strategy in your test"
-  spec.description   = "factory_bot supplies four build_strageries. factory_strategist helps you choose the best one from them."
+  spec.description   = "factory_bot supplies four build_strageries.
+  factory_strategist helps you choose the best one from them."
   spec.homepage      = "https://github.com/neko314/factory_strategist"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
