@@ -21,6 +21,16 @@ Or install it yourself as:
 
     $ gem install factory_strategist
 
+At last, include module at in spec/rails_heper of your rails app:
+
+```ruby
+require 'factory_strategist'
+
+RSpec.configure do |config|
+  config.include FactoryStrategist
+end
+```
+
 ## Usage
 
 As for usability, it is like a kind of linter.
@@ -28,11 +38,14 @@ As for usability, it is like a kind of linter.
 ### Example
 
 When your application has `spec/models/user_spec.rb` and run it with FactoryStrategist.
+
 ```shell
 $ FATORYSTRATEGIST=1 bundle exec rspec spec/models/user_spec.rb
 ```
+
 In the case which you choose best strategies, the commands returns nothing.
 Otherwise, You can get any message as a result like:
+
 ```
 #=> /spec/models/user_spec.rb:27 `create` can be replaced to `build_stubbed`
 ```
