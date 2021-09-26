@@ -12,10 +12,9 @@ module FactoryStrategist
 
       config.after(:example) do |ex|
         case ex.exception
-        when RSpec::Expectations::ExpectationNotMetError
-          # no-op
         when nil
-          p "#{ex.location} create can be replaced to build_stubbed"
+        else
+          # no-op
         end
       end
     end
