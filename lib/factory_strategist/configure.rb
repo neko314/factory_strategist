@@ -10,9 +10,9 @@ module FactoryStrategist
         case ex.exception
         when nil # when spec passes with create
           FactoryBot::Syntax::Methods.alias_method :create, :build
-          FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
           case ex.exception
           when nil # when spec passes with build
+            FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
             case ex.exception
             when nil # when spec passes with build_stubbed
               p "#{ex.location} create can be replaced to build_stubbed"
@@ -20,6 +20,7 @@ module FactoryStrategist
               p "#{ex.location} create can be replaced to build"
             end
           else # when spec fails with build
+            FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
             case ex.exception
             when nil # when spec passes with build_stubbed
               p "#{ex.location} create can be replaced to build_stubbed"
