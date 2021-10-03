@@ -13,6 +13,8 @@ module FactoryStrategist
   end
 end
 
+private
+
 def detect_optimal_strategy_at(example)
   return unless run_successfully?(example) # when spec fails with create, no-op
 
