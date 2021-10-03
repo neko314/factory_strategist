@@ -11,10 +11,10 @@ module FactoryStrategist
         return if ex.exception # when spec fails with create, no-op
 
         alias_create_to(:build)
-        alias_create_to(:build_stubbed)
         ex.run
         case ex.exception
         when nil
+          alias_create_to(:build_stubbed)
           ex.run
           case ex.exception
           when nil
@@ -23,6 +23,7 @@ module FactoryStrategist
             p "#{ex.location} create can be replaced to build_stubbed"
           end
         else
+          alias_create_to(:build_stubbed)
           ex.run
           case ex.exception
           when nil
