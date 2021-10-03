@@ -6,13 +6,16 @@ module FactoryStrategist
   # Settings to see which method is best
   module Configure
     RSpec.configure do |config|
-      config.after(:example) do |ex|
+      config.around(:example) do |ex|
+        ex.run
         return if ex.exception # when spec fails with create, no-op
 
         FactoryBot::Syntax::Methods.alias_method :create, :build
         FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
+        ex.run
         case ex.exception
         when nil # when spec passes with build
+          ex.run
           case ex.exception
           when nil # when spec passes with build_stubbed
             p "#{ex.location} create can be replaced to build_stubbed"
@@ -20,6 +23,7 @@ module FactoryStrategist
             p "#{ex.location} create can be replaced to build"
           end
         else # when spec fails with build
+          ex.run
           case ex.exception
           when nil # when spec passes with build_stubbed
             p "#{ex.location} create can be replaced to build_stubbed"
