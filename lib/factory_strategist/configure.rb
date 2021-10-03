@@ -10,8 +10,8 @@ module FactoryStrategist
         ex.run
         return if ex.exception # when spec fails with create, no-op
 
-        FactoryBot::Syntax::Methods.alias_method :create, :build
-        FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
+        alias_create_to(:build)
+        alias_create_to(:build_stubbed)
         ex.run
         case ex.exception
         when nil # when spec passes with build
@@ -36,4 +36,8 @@ module FactoryStrategist
       end
     end
   end
+end
+
+def alias_create_to(method)
+  FactoryBot::Syntax::Methods.alias_method :create, method
 end
