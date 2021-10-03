@@ -23,14 +23,14 @@ def detect_optimal_strategy_at(example)
     FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
 
     if run_successfully?(example)
-      p "#{example.location} create can be replaced to build_stubbed"
+      put_best_strategy_at(example, :build_stubbed)
     else
-      p "#{example.location} create can be replaced to build"
+      put_best_strategy_at(example, :build)
     end
   else
     FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
     if run_successfully?(example)
-      p "#{example.location} create can be replaced to build_stubbed"
+      put_best_strategy_at(example, :build_stubbed)
     end
   end
 end
@@ -38,4 +38,8 @@ end
 def run_successfully?(example)
   example.run
   !example.exception
+end
+
+def put_best_strategy_at(example, method)
+  p "#{example.location} create can be replaced to #{method}"
 end
