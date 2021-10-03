@@ -7,26 +7,20 @@ module FactoryStrategist
   module Configure
     RSpec.configure do |config|
       config.around(:example) do |ex|
-        ex.run
-        return if ex.exception # when spec fails with create, no-op
+        return unless run_successfully?(ex) # when spec fails with create, no-op
 
         alias_create_to(:build)
-        ex.run
-        case ex.exception
-        when nil
+        if run_successfully?(ex)
           alias_create_to(:build_stubbed)
-          ex.run
-          case ex.exception
-          when nil
+
+          if run_successfully?(ex)
             p "#{ex.location} create can be replaced to build_stubbed"
           else
             p "#{ex.location} create can be replaced to build"
           end
         else
           alias_create_to(:build_stubbed)
-          ex.run
-          case ex.exception
-          when nil
+          if run_successfully?(ex)
             p "#{ex.location} create can be replaced to build_stubbed"
           end
         end
@@ -37,4 +31,9 @@ end
 
 def alias_create_to(method)
   FactoryBot::Syntax::Methods.alias_method :create, method
+end
+
+def run_successfully?(example)
+  example.run
+  !example.exception
 end
