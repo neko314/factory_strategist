@@ -7,31 +7,27 @@ module FactoryStrategist
   module Configure
     RSpec.configure do |config|
       config.after(:example) do |ex|
+        return if ex.exception # when spec fails with create, no-op
+
+        FactoryBot::Syntax::Methods.alias_method :create, :build
+        FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
         case ex.exception
-        when nil # when spec passes with create
-          FactoryBot::Syntax::Methods.alias_method :create, :build
-          FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
+        when nil # when spec passes with build
           case ex.exception
-          when nil # when spec passes with build
-            case ex.exception
-            when nil # when spec passes with build_stubbed
-              p "#{ex.location} create can be replaced to build_stubbed"
-            else # when spec fails with build_stubbed
-              p "#{ex.location} create can be replaced to build"
-            end
-          else # when spec fails with build
-            case ex.exception
-            when nil # when spec passes with build_stubbed
-              p "#{ex.location} create can be replaced to build_stubbed"
-              # else
-              #   # when spec fails with build_stubbed
-              #   # create is the best strategy
-              #   # no-op
-            end
+          when nil # when spec passes with build_stubbed
+            p "#{ex.location} create can be replaced to build_stubbed"
+          else # when spec fails with build_stubbed
+            p "#{ex.location} create can be replaced to build"
           end
-          # else
-          #   # when spec fails with create
-          #   # no-op
+        else # when spec fails with build
+          case ex.exception
+          when nil # when spec passes with build_stubbed
+            p "#{ex.location} create can be replaced to build_stubbed"
+            # else
+            #   # when spec fails with build_stubbed
+            #   # create is the best strategy
+            #   # no-op
+          end
         end
       end
     end
