@@ -7,24 +7,28 @@ module FactoryStrategist
   module Configure
     RSpec.configure do |config|
       config.around(:example) do |ex|
-        next unless run_successfully?(ex) # when spec fails with create, no-op
-
-        alias_create_to(:build)
-        if run_successfully?(ex)
-          alias_create_to(:build_stubbed)
-
-          if run_successfully?(ex)
-            p "#{ex.location} create can be replaced to build_stubbed"
-          else
-            p "#{ex.location} create can be replaced to build"
-          end
-        else
-          alias_create_to(:build_stubbed)
-          if run_successfully?(ex)
-            p "#{ex.location} create can be replaced to build_stubbed"
-          end
-        end
+        detect_optimal_strategy_at(ex)
       end
+    end
+  end
+end
+
+def detect_optimal_strategy_at(example)
+  return unless run_successfully?(example) # when spec fails with create, no-op
+
+  alias_create_to(:build)
+  if run_successfully?(example)
+    alias_create_to(:build_stubbed)
+
+    if run_successfully?(example)
+      p "#{example.location} create can be replaced to build_stubbed"
+    else
+      p "#{example.location} create can be replaced to build"
+    end
+  else
+    alias_create_to(:build_stubbed)
+    if run_successfully?(example)
+      p "#{example.location} create can be replaced to build_stubbed"
     end
   end
 end
