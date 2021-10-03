@@ -18,9 +18,9 @@ module FactoryStrategist
           ex.run
           case ex.exception
           when nil
-            p "#{ex.location} create can be replaced to build"
-          else
             p "#{ex.location} create can be replaced to build_stubbed"
+          else
+            p "#{ex.location} create can be replaced to build"
           end
         else
           alias_create_to(:build_stubbed)
