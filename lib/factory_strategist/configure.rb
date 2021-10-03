@@ -14,23 +14,19 @@ module FactoryStrategist
         alias_create_to(:build_stubbed)
         ex.run
         case ex.exception
-        when nil # when spec passes with build
+        when nil
           ex.run
           case ex.exception
-          when nil # when spec passes with build_stubbed
-            p "#{ex.location} create can be replaced to build_stubbed"
-          else # when spec fails with build_stubbed
+          when nil
             p "#{ex.location} create can be replaced to build"
+          else
+            p "#{ex.location} create can be replaced to build_stubbed"
           end
-        else # when spec fails with build
+        else
           ex.run
           case ex.exception
-          when nil # when spec passes with build_stubbed
+          when nil
             p "#{ex.location} create can be replaced to build_stubbed"
-            # else
-            #   # when spec fails with build_stubbed
-            #   # create is the best strategy
-            #   # no-op
           end
         end
       end
