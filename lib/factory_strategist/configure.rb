@@ -18,21 +18,9 @@ private
 def detect_optimal_strategy_at(example)
   return unless run_successfully?(example) # when spec fails with create, no-op
 
-  FactoryBot::Syntax::Methods.alias_method :create, :build
-  if run_successfully?(example)
-    FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
+  return put_best_strategy_at(example, :build_stubbed) if run_successfully_with?(:build_stubbed, example)
 
-    if run_successfully?(example)
-      put_best_strategy_at(example, :build_stubbed)
-    else
-      put_best_strategy_at(example, :build)
-    end
-  else
-    FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
-    if run_successfully?(example)
-      put_best_strategy_at(example, :build_stubbed)
-    end
-  end
+  put_best_strategy_at(example, :build) if run_successfully_with?(:build, example)
 end
 
 def run_successfully?(example)
@@ -42,4 +30,9 @@ end
 
 def put_best_strategy_at(example, method)
   p "#{example.location} create can be replaced to #{method}"
+end
+
+def run_successfully_with?(method, example)
+  FactoryBot::Syntax::Methods.alias_method :create, method
+  run_successfully?(example)
 end
