@@ -7,7 +7,7 @@ module FactoryStrategist
   module Configure
     RSpec.configure do |config|
       config.around(:example) do |ex|
-        return unless run_successfully?(ex) # when spec fails with create, no-op
+        next unless run_successfully?(ex) # when spec fails with create, no-op
 
         alias_create_to(:build)
         if run_successfully?(ex)
