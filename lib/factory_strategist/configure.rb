@@ -6,34 +6,33 @@ module FactoryStrategist
   # Settings to see which method is best
   module Configure
     RSpec.configure do |config|
-      config.after(:example) do |ex|
-        case ex.exception
-        when nil # when spec passes with create
-          FactoryBot::Syntax::Methods.alias_method :create, :build
-          FactoryBot::Syntax::Methods.alias_method :create, :build_stubbed
-          case ex.exception
-          when nil # when spec passes with build
-            case ex.exception
-            when nil # when spec passes with build_stubbed
-              p "#{ex.location} create can be replaced to build_stubbed"
-            else # when spec fails with build_stubbed
-              p "#{ex.location} create can be replaced to build"
-            end
-          else # when spec fails with build
-            case ex.exception
-            when nil # when spec passes with build_stubbed
-              p "#{ex.location} create can be replaced to build_stubbed"
-              # else
-              #   # when spec fails with build_stubbed
-              #   # create is the best strategy
-              #   # no-op
-            end
-          end
-          # else
-          #   # when spec fails with create
-          #   # no-op
-        end
+      config.around(:example) do |ex|
+        detect_optimal_strategy_at(ex)
       end
     end
   end
+end
+
+private
+
+def detect_optimal_strategy_at(example)
+  return unless run_successfully?(example) # when spec fails with create, no-op
+
+  return put_best_strategy_at(example, :build_stubbed) if run_successfully_with?(:build_stubbed, example)
+
+  put_best_strategy_at(example, :build) if run_successfully_with?(:build, example)
+end
+
+def run_successfully?(example)
+  example.run
+  !example.exception
+end
+
+def put_best_strategy_at(example, method)
+  p "#{example.location} create can be replaced to #{method}"
+end
+
+def run_successfully_with?(method, example)
+  FactoryBot::Syntax::Methods.alias_method :create, method
+  run_successfully?(example)
 end
