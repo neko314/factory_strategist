@@ -13,8 +13,9 @@ module FactoryStrategist
         block_body = ex.example.metadata[:block].body
         replaced_to_build = block_body.gsub("create", "build")
         str = "Proc.new {" + replaced_to_build + "}"
-        # pp Parser::CurrentRuby.parse(ex)
-        # detect_optimal_strategy_at(ex)
+        proc = eval str
+        proc.call
+        detect_optimal_strategy_at(ex)
       end
     end
   end
