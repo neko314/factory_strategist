@@ -2,12 +2,19 @@
 
 require "rspec"
 require "factory_bot"
+require_relative "./proc_parser"
+
+using ProcParser
 module FactoryStrategist
   # Settings to see which method is best
   module Configure
     RSpec.configure do |config|
       config.around(:example) do |ex|
-        detect_optimal_strategy_at(ex)
+        block_body = ex.example.metadata[:block].body
+        replaced_to_build = block_body.gsub("create", "build")
+        str = "Proc.new {" + replaced_to_build + "}"
+        # pp Parser::CurrentRuby.parse(ex)
+        # detect_optimal_strategy_at(ex)
       end
     end
   end
