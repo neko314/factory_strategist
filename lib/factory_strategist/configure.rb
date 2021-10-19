@@ -10,9 +10,8 @@ module FactoryStrategist
   module Configure
     RSpec.configure do |config|
       config.around(:example) do |ex|
-        block_body = ex.example.metadata[:block].body
         detect_optimal_strategy_at(ex)
-        run_successfully_with?("build_stubbed", block_body)
+        run_successfully_with?("build", ex)
       end
     end
   end
@@ -39,9 +38,13 @@ def put_best_strategy_at(example, method)
   p "#{example.location} create can be replaced to #{method}"
 end
 
-def run_successfully_with?(method_name, block_body)
-  new_body = "Proc.new{ #{block_body.gsub("create", "#{method_name}")} }"
-  example = eval(new_body)
-  run_successfully?(example)
+def run_successfully_with?(method_name, example)
+  ex = example_replaced_from_create_to(method_name, example)
+  run_successfully?(ex)
 end
+
+def example_replaced_from_create_to(method_name, example)
+  block_body = example.example.metadata[:block].body
+  new_body = "Proc.new{ #{block_body.gsub("create", method_name.to_s)} }"
+  eval(new_body) # rubocop:disable Security/Eval
 end
