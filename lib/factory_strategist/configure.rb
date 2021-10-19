@@ -11,11 +11,8 @@ module FactoryStrategist
     RSpec.configure do |config|
       config.around(:example) do |ex|
         block_body = ex.example.metadata[:block].body
-        replaced_to_build = block_body.gsub("create", "build")
-        str = "Proc.new {" + replaced_to_build + "}"
-        proc = eval str
-        proc.call
         detect_optimal_strategy_at(ex)
+        run_successfully_with?("build_stubbed", block_body)
       end
     end
   end
@@ -32,15 +29,19 @@ def detect_optimal_strategy_at(example)
 end
 
 def run_successfully?(example)
-  example.run
-  !example.exception
+  example.call
+  true
+rescue StandardError
+  false
 end
 
 def put_best_strategy_at(example, method)
   p "#{example.location} create can be replaced to #{method}"
 end
 
-def run_successfully_with?(method, example)
-  FactoryBot::Syntax::Methods.alias_method :create, method
+def run_successfully_with?(method_name, block_body)
+  new_body = "Proc.new{ #{block_body.gsub("create", "#{method_name}")} }"
+  example = eval(new_body)
   run_successfully?(example)
+end
 end
