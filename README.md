@@ -21,16 +21,6 @@ Or install it yourself as:
 
     $ gem install factory_strategist
 
-At last, include module at in spec/rails_heper of your rails app:
-
-```ruby
-require 'factory_strategist'
-
-RSpec.configure do |config|
-  config.include FactoryStrategist
-end
-```
-
 ## Usage
 
 As for usability, it is like a kind of linter.
