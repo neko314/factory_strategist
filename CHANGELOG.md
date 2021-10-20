@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.4.0] - 2021-10-20
+
+### Changed
+
+- Rewrite `create` to `build` or `build_stubbed` and create new example block
+
 ## [0.3.0] - 2021-10-03
 
 - Rewrite main codes to make them simple(no specs!)
