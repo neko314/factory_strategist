@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.5.0] - 2021-10-22
+
+### Changed
+
+- `build` now takes precedence over `build_stubbed`
+
 ## [0.4.0] - 2021-10-20
 
 ### Changed
