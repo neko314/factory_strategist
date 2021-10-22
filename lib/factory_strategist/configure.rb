@@ -21,9 +21,9 @@ private
 def detect_optimal_strategy_at(example)
   return unless run_successfully?(example) # when spec fails with create, no-op
 
-  return put_best_strategy_at(example, :build_stubbed) if run_successfully_with?("build_stubbed", example)
+  return put_best_strategy_at(example, :build) if run_successfully_with?("build", example)
 
-  put_best_strategy_at(example, :build) if run_successfully_with?("build", example)
+  put_best_strategy_at(example, :build_stubbed) if run_successfully_with?("build_stubbed", example)
 end
 
 def run_successfully?(example)
