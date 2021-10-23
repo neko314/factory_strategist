@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.6.0] - 2021-10-23
+
+### Fixed
+
+- Fix env name, `FATORYSTRATEGIST` to `FACTORY_STRATEGIST` by @okuramasafumi
+
 ## [0.5.0] - 2021-10-22
 
 ### Changed
