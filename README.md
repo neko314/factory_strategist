@@ -30,7 +30,7 @@ As for usability, it is like a kind of linter.
 When your application has `spec/models/user_spec.rb` and run it with FactoryStrategist.
 
 ```shell
-$ FATORYSTRATEGIST=1 bundle exec rspec spec/models/user_spec.rb
+$ FACTORY_STRATEGIST=1 bundle exec rspec spec/models/user_spec.rb
 ```
 
 In the case which you choose best strategies, the commands returns nothing.
