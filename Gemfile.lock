@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    factory_strategist (0.5.0)
+    factory_strategist (0.6.0)
       factory_bot
       rspec
 
