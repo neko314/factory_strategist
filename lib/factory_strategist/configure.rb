@@ -3,8 +3,11 @@
 require "rspec"
 require "factory_bot"
 require_relative "./proc_parser"
+require_relative "./ext/rspec/core/example/procsy"
 
 using ProcParser
+using Ext::RSpec::Core::Example::Procsy
+
 module FactoryStrategist
   # Settings to see which method is best
   module Configure
@@ -21,9 +24,9 @@ private
 def detect_optimal_strategy_at(example)
   return unless run_successfully?(example) # when spec fails with create, no-op
 
-  return put_best_strategy_at(example, :build) if run_successfully_with?("build", example)
+  return example.put_best_strategy(:build) if run_successfully_with?("build", example)
 
-  put_best_strategy_at(example, :build_stubbed) if run_successfully_with?("build_stubbed", example)
+  example.put_best_strategy(:build_stubbed) if run_successfully_with?("build_stubbed", example)
 end
 
 def run_successfully?(example)
@@ -31,10 +34,6 @@ def run_successfully?(example)
   true
 rescue StandardError
   false
-end
-
-def put_best_strategy_at(example, method)
-  p "#{example.location} create can be replaced to #{method}"
 end
 
 def run_successfully_with?(method_name, example)
