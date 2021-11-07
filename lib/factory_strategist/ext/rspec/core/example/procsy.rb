@@ -24,7 +24,7 @@ module Ext
             #
             # @param method_name  [Symbol, String] build strategy name: `build` or `build_stubbed`
             # @return [Proc] new example with replacing `FactoryBot#create` to passed method
-            def example_replaced_from_create_to(method_name)
+            def replaced_from_create_to(method_name)
               block_body = metadata[:block].body
               new_body = "Proc.new{ #{block_body.gsub("create", method_name.to_s)} }"
               metadata[:block] = eval(new_body) # rubocop:disable Security/Eval

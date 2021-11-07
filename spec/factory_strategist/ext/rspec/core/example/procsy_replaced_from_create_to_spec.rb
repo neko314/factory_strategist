@@ -19,9 +19,9 @@ RSpec.describe Ext::RSpec::Core::Example::Procsy do
     RSpec::Core::Example::Procsy.new(example_instance)
   end
 
-  describe "#example_replaced_from_create_to" do
+  describe "#replaced_from_create_to" do
     it "replaces from `create` to passed method in matadata[:block]" do
-      new_example = example_procsy.example_replaced_from_create_to(:build)
+      new_example = example_procsy.replaced_from_create_to(:build)
       expect { new_example.metadata[:block].call }.to output(/build/).to_stdout
     end
   end
