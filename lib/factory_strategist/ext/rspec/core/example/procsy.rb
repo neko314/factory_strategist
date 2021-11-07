@@ -12,7 +12,7 @@ module Ext
             #
             # @param method_name [Symbol, String] build strategy name: `build` or `build_stubbed`
             # @return [String] message to show
-            def put_best_strategy_at(method)
+            def put_best_strategy(method)
               p "#{location} create can be replaced to #{method}"
             end
           end

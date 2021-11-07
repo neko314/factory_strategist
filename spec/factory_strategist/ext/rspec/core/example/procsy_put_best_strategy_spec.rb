@@ -17,10 +17,10 @@ RSpec.describe Ext::RSpec::Core::Example::Procsy do
     RSpec::Core::Example::Procsy.new(example_instance)
   end
 
-  describe "#put_best_strategy_at" do
+  describe "#put_best_strategy" do
     it do
       expect do
-        example_procsy.put_best_strategy_at(:build)
+        example_procsy.put_best_strategy(:build)
       end.to output(/#{example_instance.location} create can be replaced to build/).to_stdout
     end
   end
