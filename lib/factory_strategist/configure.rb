@@ -2,10 +2,8 @@
 
 require "rspec"
 require "factory_bot"
-require_relative "./proc_parser"
 require_relative "./ext/rspec/core/example/procsy"
 
-using ProcParser
 using Ext::RSpec::Core::Example::Procsy
 
 module FactoryStrategist
@@ -37,12 +35,6 @@ rescue StandardError
 end
 
 def run_successfully_with?(method_name, example)
-  ex = example_replaced_from_create_to(method_name, example)
+  ex = example.replaced_from_create_to(method_name)
   run_successfully?(ex)
-end
-
-def example_replaced_from_create_to(method_name, example)
-  block_body = example.example.metadata[:block].body
-  new_body = "Proc.new{ #{block_body.gsub("create", method_name.to_s)} }"
-  eval(new_body) # rubocop:disable Security/Eval
 end
